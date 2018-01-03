@@ -84,7 +84,7 @@ function simulate (data) {
       data[i].linked = true
     }
   }
-  var MAXAGE = 3700
+  var MAXAGE = 3000
   while (year <= MAXAGE) {
     year += 1
     loger(':::::::' + year + ':::::::', true)
@@ -109,6 +109,7 @@ function simulate (data) {
           probes.push(sondaNova(probes[i], 1))
           // finaliza a sonda
           probes[i].status = 'FINAL'
+          probes.splice(i, 1);
         } else {
           probes[i].buildTime -= 1
         }
@@ -129,10 +130,12 @@ function simulate (data) {
             loger('xxxxx [FINAL] ' + probes[i].id +
               ' |' + probes[i].origin.name + '->' + probes[i].dest.name)
             probes[i].status = 'FINAL'
+            probes.splice(i, 1);
           }
         } else {
           loger('xxxxx [NO TARGET] ' + probes[i].id + ' No Target')
           probes[i].status = 'FINAL'
+          probes.splice(i, 1);
         }
       }
     } // FOR
@@ -143,13 +146,13 @@ function simulate (data) {
   createGraph(portals, data)
   // loger('sondas',probes);
 } // simulate
-var logAll = false
+var logAll = true;
 function loger (string, overite) {
   if (logAll) {
     console.log(string)
   } else if (overite) {
-    console.log(string)
   }
+  console.log(string)
 }
 
 function createGraph (links, nodes) {
